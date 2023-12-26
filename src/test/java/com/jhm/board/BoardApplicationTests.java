@@ -31,5 +31,14 @@ class BoardApplicationTests {
         }
     }
 
-
+    @Test
+    public void testBtSqlSessionFactory() {
+        try {
+            System.out.println("=========================");
+            System.out.println(sessionFactory.toString());
+            System.out.println("=========================");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -1,9 +1,13 @@
 package com.jhm.board.service;
 
 import com.jhm.board.dto.BoardRequest;
+import com.jhm.board.dto.BoardResponse;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class BoardServiceTest {
@@ -13,7 +17,7 @@ class BoardServiceTest {
 
 
     @Test
-    void saveBoard() {
+    void save() {
         BoardRequest params = new BoardRequest();
         params.setTitle("제목");
         params.setContent("내용");
@@ -35,18 +39,41 @@ class BoardServiceTest {
     }
 
     @Test
-    void findBoardById() {
+    void findById() {
+        BoardRequest params = new BoardRequest();
+        params.setTitle("제목1");
+        params.setContent("내용1");
+        params.setAuthor("작성자1");
+        Long id = boardService.saveBoard(params);
+
+        BoardResponse boardById = boardService.findBoardById(id);
+//        Assertions.assertThat(boardById.getId()).isEqualTo(5);
     }
 
     @Test
-    void updateBoard() {
+    void update() {
+        BoardRequest params = new BoardRequest();
+        params.setId(5L);
+        params.setTitle("제목 수정");
+        params.setContent("내용 수정");
+        params.setAuthor("작성자 수정");
+
+        boardService.updateBoard(params);
     }
 
     @Test
-    void deleteBoard() {
+    void delete() {
+        boardService.deleteBoard(4L);
+
+        BoardResponse boardById = boardService.findBoardById(4L);
+        Boolean deleteYn = boardById.getDeleteYn();
+
+        assertThat(deleteYn).isEqualTo(true);
     }
 
     @Test
-    void findAllBoard() {
+    void findAll() {
     }
+
+
 }

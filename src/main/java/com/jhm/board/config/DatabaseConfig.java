@@ -24,7 +24,7 @@ public class DatabaseConfig {
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource.hikari")
     public HikariConfig hikariConfig() {
-        return new HikariConfig();
+        return new HikariConfig(); //hikariCP 객체 생성
     }
 
     @Bean
@@ -33,7 +33,7 @@ public class DatabaseConfig {
     }
 
     @Bean
-    public SqlSessionFactory sqlSessionFactory() throws Exception {
+    public SqlSessionFactory sqlSessionFactory() throws Exception { //DB 커넥션과 SQL 실행에 대한 모든것을 갖는 객체
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource());
         factoryBean.setMapperLocations(context.getResources("classpath:/mappers/**/*Mapper.xml"));

@@ -3,6 +3,8 @@ package com.jhm.board.controller;
 import com.jhm.board.dto.BoardRequest;
 import com.jhm.board.dto.BoardResponse;
 import com.jhm.board.dto.MessageDto;
+import com.jhm.board.dto.SearchDto;
+import com.jhm.board.paging.PagingResponse;
 import com.jhm.board.service.BoardService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,8 +26,8 @@ public class BoardController {
     }
 
     @GetMapping("/")
-    public String list(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC)Pageable pageable, Model model) {
-        List<BoardResponse> boardList = boardService.findAllBoard(pageable);
+    public String list(@ModelAttribute("params") final SearchDto params, Model model) {
+        PagingResponse<BoardResponse> boardList = boardService.findAllBoard(params);
         model.addAttribute("boardList", boardList);
         return "board/list";
     }
